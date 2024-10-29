@@ -1,14 +1,34 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
-    val name = "Kotlin"
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    println("Hello, " + name + "!")
+    val alphabet = arrayOf(
+        'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И',
+        'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т',
+        'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ь', 'Ы', 'Ъ',
+        'Э', 'Ю', 'Я'
+    )
 
-    for (i in 1..5) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        println("i = $i")
+    println("Введите 'зашифровать' или 'расшифровать':")
+    val action = readln()
+    println("Введите ключевое слово:")
+    val keyword = readln().uppercase()
+    println("Введите текст:")
+    val text = readln().uppercase()
+
+    val cipheredText = StringBuilder()
+    val decodedText = StringBuilder()
+
+    for (i in text.indices) {
+        val offset = keyword[i % keyword.length] - 'А' + 1 // Расчитываем смещение
+        val alphabetIndex = (alphabet.indexOf(text[i]) + (if (action == "зашифровать") offset else -offset + 33)) % 33
+        if (action == "зашифровать") {
+            cipheredText.append(alphabet[alphabetIndex])
+        } else {
+            decodedText.append(alphabet[alphabetIndex])
+        }
+    }
+
+    when (action) {
+        "зашифровать" -> println("Зашифрованный текст: $cipheredText")
+        "расшифровать" -> println("Дешифрованный текст: $decodedText")
+        else -> println("Неверное действие")
     }
 }
